@@ -8,10 +8,18 @@ h4 {
   text-shadow: 2px 2px lightblue;
 }
 
+ul {
+  width: 75%;
+  flex: 1;
+}
+
 .hFlex {
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+.projPics {
+  padding-bottom: 20px;
 }
 
 .vFlex {
@@ -30,6 +38,9 @@ h4 {
   flex: 1;
   height: 100%;
   padding: 10px;
+}
+.bgcolor {
+  background: lightgray;
 }
 
 #paragraphsDiv {
