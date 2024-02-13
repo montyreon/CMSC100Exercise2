@@ -1,83 +1,108 @@
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="index.css" type="text/css" rel="stylesheet"></link>
+    <link href="index.css" type="text/css" rel="stylesheet">
 </head>
+
 <body>
+    <!-- A sticky navigation bar -->
     <div id="navbar" class="hFlex">
-        <img id="logo" src="idPic.png" class="navItem">
-        <h3 class="navItem" id="title">Welcome to Ico</h3>
+        <img id="logo" src="me.jpeg" class="navItem">
+        <h3 class="navItem" id="title">Hello, I'm ico... and I make stuff</h3>
     </div>
 
-    <div class="hFlex">
-        <h3>Featured Photo</h3>
+    <!-- Contains the introductory featured project item -->
+    <div class="hFlex featuredContainer" id="top">
+        <div class="vFlex" id="sideText">
+            <img id="featured" src="featured.png">
+        </div>
+        <div class="vFlex">
+            <h1>Object Oriented Programming Project</h1>
+            <p id="description">A simple arcade game made with Java and JavaFX library featuring minigames set in the
+                daily
+                life of UPLB students in the Physical Sciences Building.</p>
+        </div>
     </div>
-    <div class="hFlex">
-        <img id="featured" src="featured.png" >
-    </div>
-    <div class="hFlex">
-        <p id="description"">A simple arcade game made with Java and JavaFX library featuring minigames set in the daily life of UPLB students in the Physical Sciences Building.</p>
+
+    <!-- More project samples -->
+    <div class="hFlex bgcolor">
+        <h4>Numerical Analysis Projects</h4>
     </div>
     <div class="hFlex bgcolor">
-        <h3>Previous Projects</h3>
-    </div>
-    <div class="hFlex bgcolor">
-        <p id="description"">R programs for computing various interpolation of datapoints and a diet problem solver.</p>
+        <p id="description">R programs for computing various interpolations of datapoints and a diet problem solver.</p>
     </div>
     <div class="projPics hFlex bgcolor">
-    <img class="picSmall" src="project1.png" >
-    <img class="picSmall" src="project2.png" >
-    <img class="picSmall" src="project3.png" >
-    <img class="picSmall" src="project3.png" >    
+        <img class="picSmall" src="project1.png">
+        <img class="picSmall" src="project2.png">
+        <img class="picSmall" src="project3.png">
     </div>
 
-    <div id="paragraphsDiv"> 
-
-
-    <div class="hFlex">
-        <div class="vFlex">
-            <div class="hFlex">
-                <h4>Skills</h4>
+    <!-- Section cards about myself -->
+    <div id="paragraphsDiv">
+        <div class="hFlex">
+            <div class="vFlex">
+                <div class="boxContent">
+                    <div class="hFlex" style="height: min-content;">
+                        <h4>Skills</h4>
+                    </div>
+                    <ul>
+                        <li>Intermediate level in Java</li>
+                        <li>Intermediate proficiency in C</li>
+                        <li>Intermediate familiarity with R programming language</li>
+                        <li>Intermediate proficiency in JavaScript</li>
+                        <li>Intermediate experience with React</li>
+                        <li>Intermediate proficiency in Python</li>
+                    </ul>
+                </div>
             </div>
-            <div class="boxContent">
-                <ul>
-                    <li>Intermediate level in Java</li>
-                    <li>Intermediate proficiency in C</li>
-                    <li>Intermediate familiarity with R programming language</li>
-                    <li>Intermediate proficiency in JavaScript</li>
-                    <li>Intermediate experience with React</li>
-                    <li>Intermediate proficiency in Python</li>
-                  </ul>
-                
-            </div>
-    </div>
-        <div class="vFlex">
-            <div class="hFlex">
-                <h4>AutoBiography</h4>
-            </div>
-            <div class="boxContent">
-                <p>I am Jerico Roen B. de Vega, a BSCS sophomore currently residing in Los Banos, Laguna. I grew up having a liking for popular science media. I am interested in variety of things such as journalism, videogames, earth science, and culinary arts. I hope to be able to use my skills in computer science to further explore my interests.</p>
-            </div>
-        </div>
 
 
-    </div>
-    </div>
-
-    <div id="footer">
-        <img id="logo" src="idPic.png" >  
-        <div id="footerLines">
-        <p>Jerico Roen B. de Vega</p>
-        <p>BS Computer Science | UPLB</p>
-        <p>All rights reserved</p>
-        <a href="#navbar">Back to top</a>
+            <div class="vFlex">
+                <div class="boxContent">
+                    <div class="hFlex">
+                        <h4>About me</h4>
+                    </div>
+                    <p>I am Jerico Roen B. de Vega, a BSCS sophomore currently residing in Los Banos, Laguna. I grew up
+                        having a liking for popular science media. I am interested in a variety of things such as
+                        journalism, video games, earth science, and culinary arts. I hope to be able to use my skills in
+                        computer science to further explore my interests.</p>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Project exhibition with a button to redirect to CMSC 12 project-->
+    <div class="hFlex bgcolor">
+        <h4>Project Exhibition: Web based Theatre Booking System</h4>
+    </div>
+    <div class="hFlex bgcolor">
+        <div class="vFlex">
+            <p id="description">A capstone project for an introductory course in computer science. Implements a seating
+                management program made with Javascript, HTML, and CSS.</p>
+            <div class="hFlex">
+                <!-- Short script from CMSC 12 project to open the html file -->
+                <script>
+                    function openLink(url) {
+                        window.location.href = url;
+                    }
+                </script>
+                <div class="cashierStyle" id="cashierInit" onclick="openLink('bookingSystem.html')">Check it out</div>
+            </div>
+        </div>
+    </div>
 
+
+
+    <div id="footer" class="hFlex">
+        <p id="footerText">Jerico Roen B. de Vega | BS Computer Science UPLB | jbdevega@up.edu.ph | All rights reserved.
+            <a href="
+                #top">Back to top</a>
+        </p>
+    </div>
 </body>
+
 </html>
-font-weight: bolder;
-font-size: xx-large;

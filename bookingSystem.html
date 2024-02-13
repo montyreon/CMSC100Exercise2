@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cinema Booking System</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="mind.js"></script>
+</head>
+
+<body>
+    <script>
+        function openLink(url) {
+            window.location.href = url;
+        }
+    </script>
+
+    <!-- INITIAL ADMIN OR CASHIER SELECTION -->
+    <flex id="initMenu">
+        <div class="cashierStyle" id="goBack" onclick="openLink('index.html')">Go back</div>
+        <div class="adminStyle" id="adminInit" onclick="summonForm('adminInitMenu'); toggleMainMenu()">Admin</div>
+        <div class="cashierStyle" id="cashierInit"
+            onclick="summonForm('cashierViewAllMovies'); toggleMainMenu(); loadCashierView()">Cashier</div>
+    </flex>
+
+    <!-- ADMIN MENU -->
+    <form id="adminInitMenu">
+        <h1>Cinema Admin Menu</h1>
+        <flex>
+            <div class="adminStyle adminMenu" onclick="loadAddMovie(); moveToForm('adminInitMenu','addMovie')">Add Movie
+            </div>
+            <div class="adminStyle adminMenu"
+                onclick="if (mainList.length > 0 && mainList[0] != '') {loadEditMovie(); moveToForm('adminInitMenu','editMovie_List')} else {alert('No movie to edit yet.')}">
+                Edit Movie</div>
+            <div class="adminStyle adminMenu"
+                onclick="loadDeleteMovie_Prompt(); moveToForm('adminInitMenu', 'deleteMovie_Prompt')">
+                View or Delete</div>
+            <div class="adminStyle adminMenu" onclick="moveToForm('adminInitMenu', 'manageData')">
+                Manage Data</div>
+        </flex>
+        <div class="adminStyle adminMenu" id="adminInitBack" onclick="toggleMainMenu(); withdrawForm('adminInitMenu')">
+            Back to Main Menu</div>
+    </form>
+
+
+    <!-- ADMIN ADD MOVIE -->
+    <form id="addMovie">
+        <h1>Add a Movie</h1>
+        <div class="table">
+            <p><label id="movieID">Movie ID: </label>
+                <y id="addMovieID">0001</y>
+            </p>
+            <p><label for="movieName">Movie Name: </label><input type="text" id="movieName" required><br /></p>
+            <p><label for="genre">Genre: </label><input type="text" id="genre" required><br /></p>
+            <p><label for="restriction">Restriction: </label>
+                <select id="restriction" value="Rated G" required>
+                    <option value="G">Rated G</option>
+                    <option value="PG">Rated PG</option>
+                    <option value="RPG">Rated RPG</option>
+                    <option value="R18+">Rated R18+</option>
+                </select>
+            </p>
+            <p><label for="venue">Venue: </label>
+                <select id="venue" value="Cinema 1"
+                    onchange="loadSimilarScheduleForm(document.getElementById('schedDate').value, this.value);"
+                    required>
+                    <option value="Cinema 1">Cinema 1</option>
+                    <option value="Cinema 2">Cinema 2</option>
+                    <option value="Cinema 3">Cinema 3</option>
+                </select>
+            </p>
+            <p><label for="schedDate">Date: </label><input type="date" id="schedDate"
+                    onchange="loadSimilarScheduleForm(this.value, document.getElementById('venue').value)"
+                    required><br /></p>
+            <p><label for="startTime">Start Time: </label><input type="time" id="startTime" required><br /></p>
+            <p><label for="endTime">End Time: </label><input type="time" id="endTime" required><br /></p>
+            <p><label for="ticketPrice">Ticket Price: </label><input type="number" id="ticketPrice" required><br /></p>
+        </div>
+        <br>
+        <div>
+            <button type="submit" id="addMovieSubmitBtn">Submit</button>
+            <button type="button"
+                onclick="resetForm('addMovie'); moveToForm('addMovie', 'adminInitMenu'); withdrawForm('similarScheduleForm')">Cancel</button>
+        </div>
+    </form>
+
+
+    <!-- ADMIN EDIT MOVIE -->
+    <form id="editMovie_List">
+        <h1>Edit Movie</h1>
+        <h3>Please select a movie</h3>
+        <select id="editMovie_ListSelect">
+        </select>
+        <br>
+        <div>
+            <button type="submit" id="editMovie_ListButton">Confirm</button>
+            <button type="button"
+                onclick="resetForm('editMovie_List'); moveToForm('editMovie_List', 'adminInitMenu')">Cancel</button>
+        </div>
+    </form>
+    <form id="editMovie_Edit">
+        <h3>Edit Movie Details</h3>
+        <div class="table">
+            <p><label id="EmovieID">Movie ID: </label>
+                <y id="EaddMovieID">0001</y>
+            </p>
+            <p><label for="EmovieName">Movie Name: </label><input type="text" id="EmovieName" required><br /></p>
+            <p><label for="Egenre">Genre: </label><input type="text" id="Egenre" required><br /></p>
+            <p><label for="Erestriction">Restriction: </label>
+                <select id="Erestriction" value="G" required>
+                    <option value="G">Rated G</option>
+                    <option value="PG">Rated PG</option>
+                    <option value="RPG">Rated RPG</option>
+                    <option value="R18+">Rated R18+</option>
+                </select>
+            </p>
+            <p><label for="Evenue">Venue: </label>
+                <select id="Evenue" value="Cinema 1"
+                    onchange="loadSimilarScheduleForm(document.getElementById('EschedDate').value, this.value)"
+                    required>
+                    <option value="Cinema 1">Cinema 1</option>
+                    <option value="Cinema 2">Cinema 2</option>
+                    <option value="Cinema 3">Cinema 3</option>
+                </select>
+            </p>
+            <p><label for="EschedDate">Date: </label><input type="date" id="EschedDate"
+                    onchange="loadSimilarScheduleForm(this.value, document.getElementById('venue').value)"
+                    required><br /></p>
+            <p><label for="EstartTime">Start Time: </label><input type="time" id="EstartTime" required><br /></p>
+            <p><label for="EendTime">End Time: </label><input type="time" id="EendTime" required><br /></p>
+            <p><label for="EticketPrice">Ticket Price: </label><input type="number" id="EticketPrice" required><br />
+            </p>
+        </div> <br />
+        <div>
+            <button type="submit" id="editMovie_EditSaveBtn">Save</button>
+            <button type="button" id="editMovie_EditCancelBtn"
+                onclick="resetForm('editMovie_Edit'); moveToForm('editMovie_Edit', 'adminInitMenu'); withdrawForm('similarScheduleForm');">Cancel</button>
+        </div>
+    </form>
+
+    <!-- ADMIN DELETE OR VIEW MOVIE -->
+    <form id="deleteMovie_Prompt">
+        <h1>View or Delete Movie Data</h1>
+        <div>
+            <p>
+            <h3>
+                <center>View or Delete by movie ID:</center>
+            </h3>
+            <center style="margin-top: 3pt;">
+                Input an ID: <input type="text" id="deleteByIDInput" placeholder="XXXX" maxlength="4"
+                    style="width: 40pt; text-align: center;" />
+                <button type="button" onclick="expandByInputIDBtn()">View</button>
+                <button type="button" onclick="deleteByInputIDBtn()">Delete</button>
+                <h5 id="deleteByIDWarning">No entry with ID: XXXX found.</h5>
+            </center>
+            <br>
+        </div>
+        <hr><br>
+        <div>
+            </p>
+            <p>
+            <h3>
+                <center>Filters <button type="button" id="deleteApplyFilterBtn"
+                        onclick="renderFilteredDeleteTable()">Apply</button>
+                    <button type="button" id="deleteClearFilterBtn" onclick="deleteClearFilterBtnFunc()">Clear</button>
+                </center>
+            </h3>
+            </p>
+            <p>
+                <label for="deleteFilterCinema">Cinema:</label>
+                <select id="deleteFilterCinema">
+                    <option value="Any">Any</option>
+                    <option value="Cinema 1">Cinema 1</option>
+                    <option value="Cinema 2">Cinema 2</option>
+                    <option value="Cinema 3">Cinema 3</option>
+                </select>
+                <br>
+            </p>
+            <p>
+                <label for="deleteFilterDate">Date:</label>
+                <input type="date" id="deleteFilterDate">
+                <br>
+            </p>
+            <p>
+                <label for="deleteFilterName">Movie Name:</label>
+                <input type="text" id="deleteFilterName">
+            </p>
+        </div>
+        <br>
+
+        <div class="table" id="deleteMovieTable">
+            <p><b>Movie ID</b> <b>Movie Title</b> <b>Genre</b> <b>Restriction</b> <b>Venue</b> <b>Date</b> <b>Start
+                    Time</b> <b>End Time</b> <b>Price</b> <b></b></p>
+            <p><tt>0000</tt><tt>University Something</tt><tt>Documentary</tt><tt>PG</tt><tt>Cinema
+                    2</tt><tt>12-25-2022</tt><tt>13:00</tt><tt>14:00</tt><tt>400</tt><button type="button"
+                    onclick="">Delete</button>
+            </p>
+        </div>
+        <br>
+        <h3>
+            <center>Delete all listed <button type="button" id="deleteAllListed"
+                    onclick='deleteAllListedBtn(); deleteClearFilterBtnFunc()'>Delete
+                    All </button>
+            </center>
+        </h3>
+        <div>
+            <button type="submit" id="deleteMovieSave">Save</button>
+            <button type="button" id="deleteMovieCancel"
+                onclick="resetForm('deleteMovie_Prompt'); moveToForm('deleteMovie_Prompt', 'adminInitMenu');">Cancel</button>
+        </div>
+    </form>
+
+    <!-- MANAGE DATA - SAVE, LOAD -->
+    <form id="manageData">
+        <h1>Manage Movie Records</h1>
+        <flex>
+            <div class="adminStyle adminMenu" onclick="saveToFile()">Save Data
+            </div>
+            <div class="adminStyle adminMenu" onclick="document.getElementById('fileUpload').click(); if (document.getElementById('fileUpload').files.length > 0) {
+                loadFromFile();
+            } ">Load Data
+            </div>
+        </flex>
+        <input id='fileUpload' type="file" onchange="loadFromFile()" hidden>
+        <div class="adminStyle adminMenu" onclick="moveToForm('manageData', 'adminInitMenu')">
+            Go Back</div>
+    </form>
+
+    <!-- VIEW ALL DETAILS PANEL -->
+    <form id="viewMovie_AllDetails">
+        <h3>All Movie Details</h3>
+        <div class="table">
+            <p><label>Movie ID: </label><br />
+                <c id="viewAllMovieID">0001</c>
+            </p>
+            <p><label>Movie Name: </label><br />
+                <c id="viewAllMovieName">Movie Title Here</c>
+            </p>
+            <p><label>Genre: </label><br />
+                <c id="viewAllMovieGenre">Horror</c>
+            </p>
+            <p><label>Restriction: </label><br />
+                <c id="viewAllMovieRestriction">PG13</c>
+            </p>
+            <p><label>Venue: </label><br />
+                <c id="viewAllMovieVenue">Cinema 1</c>
+            </p>
+            <p><label>Date: </label><br />
+                <c id="viewAllMovieDate">12/12/2022</c>
+            </p>
+            <p><label>Start Time: </label><br />
+                <c id="viewAllMovieStartTime">12:08</c>
+            </p>
+            <p><label>End Time: </label><br />
+                <c id="viewAllMovieEndTime">14:23</c>
+            </p>
+            <p><label>Price: </label><br />
+                <c id="viewAllMoviePrice">PHP100</c>
+            </p>
+            <p><label>Total Earnings: </label><br />
+                <c id="viewAllMovieEarnings">PHP 3400.00</c>
+            </p>
+        </div>
+        <br>
+        <h3>Booked Seats</h3>
+        <div id="viewSeatTable">
+            <p id="viewSeatTableRow1">
+                <seat><input type="checkbox" id="viewA1" disabled>A1</seat>
+                <seat><input type="checkbox" id="viewB1" disabled>B1</seat>
+                <seat><input type="checkbox" id="viewC1" disabled>C1</seat>
+                <seat><input type="checkbox" id="viewD1" disabled>D1</seat>
+            </p>
+            <p id="viewSeatTableRow2">
+                <seat><input type="checkbox" id="viewA2" disabled>A2</seat>
+                <seat><input type="checkbox" id="viewB2" disabled>B2</seat>
+                <seat><input type="checkbox" id="viewC2" disabled>C2</seat>
+                <seat><input type="checkbox" id="viewD2" disabled>D2</seat>
+            </p>
+            <p id="viewSeatTableRow3">
+                <seat><input type="checkbox" id="viewA3" disabled>A3</seat>
+                <seat><input type="checkbox" id="viewB3" disabled>B3</seat>
+                <seat><input type="checkbox" id="viewC3" disabled>C3</seat>
+                <seat><input type="checkbox" id="viewD3" disabled>D3</seat>
+            </p>
+            <p id="viewSeatTableRow4">
+                <seat><input type="checkbox" id="viewA4" disabled>A4</seat>
+                <seat><input type="checkbox" id="viewB4" disabled>B4</seat>
+                <seat><input type="checkbox" id="viewC4" disabled>C4</seat>
+                <seat><input type="checkbox" id="viewD4" disabled>D4</seat>
+            </p>
+            <p id="viewSeatTableRow5">
+                <seat><input type="checkbox" id="viewA5" disabled>A5</seat>
+                <seat><input type="checkbox" id="viewB5" disabled>B5</seat>
+                <seat><input type="checkbox" id="viewC5" disabled>C5</seat>
+                <seat><input type="checkbox" id="viewD5" disabled>D5</seat>
+            </p>
+        </div>
+        <br><button type="submit" id="viewMovie_AllDoneBtn">Done</button>
+    </form>
+
+    <!-- SIMILAR SCHEDULE DETAILS PANEL -->
+    <form id="similarScheduleForm">
+        <h3 id="similarScheduleTitle">
+            Schedule for Cinema X MM-DD-YYYY
+        </h3>
+        <div class="table" id="similarScheduleTable">
+            <p><b>Movie Name</b> <b>Start Time</b> <b>End Time</b></p>
+            <p><tt>--------</tt> <tt>-------</tt> <tt>-------</tt></p>
+        </div>
+    </form>
+
+    <!-- CASHIER MENU FOR VIEWING AND BOOKING  -->
+    <form id="cashierViewAllMovies" class="cashier">
+        <h1>Cinema Cashier Menu</h1>
+        <h3>Book by Movie ID</h3>
+        <div><label for="cashierViewAllMovies_IDInput">Enter ID:</label>
+            <input id="cashierViewAllMovies_IDInput" placeholder="XXXX" maxlength="4" type="text" />
+            <button type="submit" id="cashierViewAllMovies_IDSubmitBtn">Go</button>
+        </div>
+        <h5 id="bookByIDWarning" hidden>No entry with ID: XXXX found.</h5>
+        <hr>
+        <h3>Filter By Name</h3>
+        <div>
+            <label for="cashierViewByNameInput">Enter Name:</label>
+            <input id="cashierViewByNameInput" type="text" />
+            <button type="button" id="viewByNameBtn" onclick="viewByNameBtnFunc()">Apply</button>
+        </div>
+        <h5 id="viewByNameWarning" hidden>No movie with such name found.</h5>
+        <hr>
+        <div class="table" id="cashierViewAllTable">
+            <p>
+                <b>Movie ID</b> <b>Movie Title</b> <b>Genre</b> <b>Restriction</b> <b>Venue</b> <b>Date</b> <b>Start
+                    Time</b> <b>End Time</b> <b>Price</b><b></b>
+            </p>
+            <p>
+                <tt>0001</tt> <tt>Tales of Interstellar</tt> <tt>Sci-fi</tt> <tt>PG</tt> <tt>Cinema 3</tt>
+                <tt>12/13/2022</tt> <tt>10:46</tt> <tt>12:05</tt> <tt>200.00</tt> <button type="button"
+                    id="bookBtn1">Book</button>
+            </p>
+        </div>
+        <br>
+        <button type="button" onclick="renderTableBookingMenu(getSortedList())">Show all</button>
+        <div class="cashierStyle adminMenu" id="cashierViewBack"
+            onclick="toggleMainMenu(); withdrawForm('cashierViewAllMovies')">Back to Main Menu</div>
+    </form>
+
+    <!-- BOOKING INTERFACE FORM -->
+    <form id="cashierBookMovie" class="cashier">
+        <h1>Book Movie</h1>
+        <div class="table">
+            <p>
+                <b>Movie ID</b> <b>Movie Title</b> <b>Genre</b> <b>Restriction</b> <b>Venue</b> <b>Date</b> <b>Start
+                    Time</b> <b>End Time</b> <b>Price</b><b></b>
+            </p>
+            <p>
+                <tt id="bookPreviewMovieID">0001</tt>
+                <tt id="bookPreviewMovieTitle">Tales of Interstellar</tt>
+                <tt id="bookPreviewMovieGenre">Sci-fi</tt>
+                <tt id="bookPreviewMovieRestriction">PG</tt>
+                <tt id="bookPreviewMovieVenue">Cinema 3</tt>
+                <tt id="bookPreviewMovieDate">12/13/2022</tt>
+                <tt id="bookPreviewMovieStartTime">10:46</tt>
+                <tt id="bookPreviewMovieEndTime">12:05</tt>
+                <tt id="bookPreviewMoviePrice">200</tt>
+            </p>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <h3>Select Seats</h3>
+        <div id="bookTable">
+            <p id="bookMovieTableRow1">
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookA1" value="A1">A1</seat>
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookB1" value="B1">B1</seat>
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookC1" value="C1">C1</seat>
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookD1" value="D1">D1</seat>
+            </p>
+            <p id="bookMovieTableRow2">
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookA2" value="A2">A2</seat>
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookB2" value="B2">B2</seat>
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookC2" value="C2">C2</seat>
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookD2" value="D2">D2</seat>
+            </p>
+            <p id="bookMovieTableRow3">
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookA3" value="A3">A3</seat>
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookB3" value="B3">B3</seat>
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookC3" value="C3">C3</seat>
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookD3" value="D3">D3</seat>
+            </p>
+            <p id="bookMovieTableRow4">
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookA4" value="A4">A4</seat>
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookB4" value="B4">B4</seat>
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookC4" value="C4">C4</seat>
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookD4" value="D4">D4</seat>
+            </p>
+            <p id="bookMovieTableRow5">
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookA5" value="A5">A5</seat>
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookB5" value="B5">B5</seat>
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookC5" value="C5">C5</seat>
+                <seat><input onclick="updateSeatSelected(this)" type="checkbox" id="bookD5" value="D5">D5</seat>
+            </p>
+        </div>
+        <br>
+        <div class="table widthAuto">
+            <p><b>Selected: </b>
+                <y id="selectedSeatCount">0</y>
+            </p>
+            <p><b>Total cost: </b>
+                <y id="totalCostBooking">PHP 0.00</y>
+            </p>
+            <p><b>Voucher: </b> <input type="text" id="voucher" onchange="updateVoucherDiscount(this)"></p>
+            <p><b>Discount: </b>
+                <y id="discountBooking">PHP -0.00</y>
+            </p>
+            <p><b>Amount to pay: </b>
+                <y id="amountToPay">PHP 0.00</y>
+            </p>
+            <p><b>Payment: </b> <input type="number" id="bookingPayment" min="0" value="0" onchange="validatePayment()">
+            </p>
+        </div>
+        <br>
+        <div>
+            <button id="bookConfirm" type="submit" disabled>Confirm</button>
+            <button id="bookCancel" type="button"
+                onclick="resetForm('cashierBookMovie'); loadCashierView(); moveToForm('cashierBookMovie', 'cashierViewAllMovies');">Cancel</button>
+        </div>
+    </form>
+
+    <!-- RECEIPT PANEL -->
+    <form id="receipt">
+        <h1>Receipt</h1>
+        <hr>
+        <y>ICS Movie House</y>
+        <y>Physical Sciences Building</y>
+        <y>University Of the Philippines Los Baños</y>
+        <y id="transactionTime">Transaction time: 12/13/2022 14:32</y>
+        <hr>
+        <div class="table">
+            <p><b class="widthA padLeft">Item</b><b class="alignRight">Price</b></p>
+        </div>
+        <div class="table" id="receiptItems">
+            <p><tt class="widthA padLeft">Seat A1 | 0001 Tales of Interstellar 12/12/2022 15:03-17:24</tt><tt
+                    class="alignRight">200.00</tt></p>
+            <p><tt class="widthA padLeft">Seat A3 | 0001 Tales of Interstellar 12/12/2022 15:03-17:24</tt><tt
+                    class="alignRight">200.00</tt></p>
+            <p><tt class="widthA padLeft">Seat B3 | 0001 Tales of Interstellar 12/12/2022 15:03-17:24</tt><tt
+                    class="alignRight">200.00</tt></p>
+        </div>
+        <br>
+        <div class="table">
+            <p><b>Total: </b>
+                <y class="alignRight" id="receiptTotal">0.00</y>
+            </p>
+            <p><b>Discount: </b>
+                <y class="alignRight" id="receiptDiscount">-0.00</y>
+            </p>
+        </div>
+        <hr>
+        <div class="table">
+            <p><b>Amount: </b>
+                <y class="alignRight" id="receiptAmount">0.00</y>
+            </p>
+            <p><b>Payment: </b>
+                <y class="alignRight" id="receiptPayment">0.00</y>
+            </p>
+            <p><b>Change: </b>
+                <y class="alignRight" id="receiptChange">0.00</y>
+            </p>
+        </div>
+        <hr>
+        <br>
+        <button type="submit" id="receiptDoneBtn">Done</button>
+    </form>
+</body>
+<script>
+    //Set up submit events for Add Movie Forms
+    const addMovieForm = document.getElementById("addMovie")
+    addMovieForm.addEventListener('submit', addMovieFunc)
+    const editMovie_ListForm = document.getElementById("editMovie_List")
+    editMovie_ListForm.addEventListener('submit', editMovie_ListFunc)
+    const editMovie_EditForm = document.getElementById("editMovie_Edit")
+    editMovie_EditForm.addEventListener('submit', editMovie_EditFunc)
+    //Set up submit events for Delete Movie Forms
+    const deleteMovie_PromptForm = document.getElementById('deleteMovie_Prompt')
+    deleteMovie_PromptForm.addEventListener('submit', deleteMovie_PromptFunc)
+
+    //Set up submit event for View Movie Form
+    const viewMovie_AllDetailsForm = document.getElementById('viewMovie_AllDetails')
+    viewMovie_AllDetailsForm.addEventListener('submit', viewMovie_AllDetailsFunc)
+
+    //Set up submit events for Cashier Movie Forms
+    const cashierViewAllMoviesForm = document.getElementById('cashierViewAllMovies')
+    cashierViewAllMoviesForm.addEventListener('submit', cashierViewAllMoviesFunc)
+    const cashierBookMovieForm = document.getElementById('cashierBookMovie')
+    cashierBookMovieForm.addEventListener('submit', cashierBookMovieFunc)
+    const receiptForm = document.getElementById('receipt')
+    receiptForm.addEventListener('submit', receiptFunc)
+    // Hides all the form initially
+    allFormsDisplay("none")
+
+    //This prevents the user from submitting forms when pressing enter in text input areas.
+    //Adapted from https://stackoverflow.com/questions/585396/how-to-prevent-enter-keypress-to-submit-a-web-form
+    window.addEventListener('keydown', function (event) {
+        //Checks if the key is and end line (\n) OR an enter\return key       OR the keyCode is 13 (Enter)
+        if (event.keyIdentifier == 'U+000A' || event.keyIdentifier == 'Enter' || event.keyCode == 13) {
+            //Checks if what triggered the event is an <input> element 
+            if (event.target.nodeName == 'INPUT') {
+                //Keeps the form from submitting (the default action set to the enter key)
+                event.preventDefault();
+                return false;
+            }
+        }
+    }, true);
+
+</script>
+
+</html>
