@@ -1,0 +1,42 @@
+.hFlex {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.vFlex {
+  display: block;
+  background-color: aqua;
+}
+
+.picSmall {
+  width: 75px;
+  height: 75px;
+}
+
+.boxContent {
+}
+
+#footer {
+  background: green;
+  display: flex;
+}
+
+#navbar {
+  background-color: blue;
+  justify-content: center;
+  flex-direction: row;
+  height: auto;
+  width: 100%;
+}
+
+#logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+}
+
+#featured {
+  width: 200px;
+  height: 200px;
+}
