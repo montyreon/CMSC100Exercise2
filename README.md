@@ -4,7 +4,8 @@
 
 **Full Name:** Jerico Roen B. de Vega
 **Degree Program:** BS Computer Science
-**Live Website Link:** [GitHub Repository](https://github.com/UPLB-CMSC100-AY2324-2S/week-01-html-and-css-montyreon)
+**Repository Link** [GitHub Repository](https://github.com/UPLB-CMSC100-AY2324-2S/week-01-html-and-css-montyreon)
+**Live Website Link** [here](https://montyreon.github.io/CMSC100Exercise2/index.html)
 **Steps to Create GitHub Page:**
 1. Create a repository on GitHub.
 2. Clone it to your local device.
