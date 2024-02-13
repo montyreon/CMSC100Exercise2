@@ -33,7 +33,7 @@ h4 {
 }
 
 #paragraphsDiv {
-  width: 100%;
+  width: 90%;
 }
 
 #title {
@@ -42,10 +42,16 @@ h4 {
   font-size: xx-large;
 }
 
+#description {
+  text-align: center;
+  width: 80%;
+}
+
 #footer {
   background: black;
   display: flex;
   color: white;
+  padding: 20px;
 }
 
 #navbar {
@@ -58,10 +64,14 @@ h4 {
 
 #logo {
   width: 75px;
+  height: 75px;
   border-radius: 50px;
 }
 
 #featured {
-  width: 200px;
-  height: 200px;
+  width: 85%;
+  max-width: 720px;
+  box-shadow: 12px 12px lightblue;
+  border-radius: 10px;
+  margin-bottom: 4pt;
 }
